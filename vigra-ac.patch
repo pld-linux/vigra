@@ -1,27 +1,17 @@
---- vigra1.2.0/config/configure.in.orig	2003-08-07 02:16:14.000000000 +0200
-+++ vigra1.2.0/config/configure.in	2004-03-15 23:57:47.256624568 +0100
-@@ -1,18 +1,7 @@
- AC_INIT(include/vigra/config.hxx)
+--- vigra1.3.2/config/configure.in.orig	2005-01-27 21:06:04.000000000 +0100
++++ vigra1.3.2/config/configure.in	2005-04-03 00:07:14.930618800 +0200
+@@ -38,7 +38,7 @@
+     prefix=`pwd`
+ fi
  
--AC_PREFIX_DEFAULT([`pwd`])
- vigra_srcdir=`pwd`
- vigra_builddir=`pwd`
--
--# expand prefix and exec_prefix
--if test "x$prefix" = "xNONE" ; then
--    prefix=$ac_default_prefix
--elif test "x$prefix" = "x." ; then
--    prefix=`pwd`
--fi
--
--VIGRA_DOCDIR_DEFAULT(['${prefix}/doc/vigra'])
--
- AC_CONFIG_AUX_DIR(config)
+-AC_CONFIG_AUX_DIR($vigra_srcdir/config)
++AC_CONFIG_AUX_DIR(config)
  
  dnl-------------------------------------------------------------------
-@@ -23,9 +23,6 @@
- AC_CYGWIN
- AC_MINGW32
+ dnl              compiler and platform configuration
+@@ -48,9 +48,6 @@
+ dnl AC_CYGWIN seems to be part of AC_CANONICAL_SYSTEM
+ dnl AC_MINGW32 seems to be part of AC_CANONICAL_SYSTEM
  
 -CFLAGS=-O
 -CXXFLAGS=-O
@@ -29,9 +19,9 @@
  AC_ARG_WITH( cc, AC_HELP_STRING([--with-cc], [your C compiler (default=gcc)]), CC=$with_cc, [if test "x$CC" = "x" ; then CC=gcc ; fi])
  AC_ARG_WITH( cxx, AC_HELP_STRING([--with-cxx], [your C++ compiler (default=g++)]), CXX=$with_cxx, [if test "x$CXX" = "x" ; then CXX=g++ ; fi])
  
---- vigra1.2.0/src/impex/Makefile.orig	2003-06-27 02:02:39.000000000 +0200
-+++ vigra1.2.0/src/impex/Makefile	2004-03-16 00:14:51.531911056 +0100
-@@ -19,7 +19,7 @@
+--- vigra1.3.2/src/impex/Makefile.in.orig	2004-11-09 11:40:31.000000000 +0100
++++ vigra1.3.2/src/impex/Makefile.in	2005-04-03 00:12:44.739480232 +0200
+@@ -21,7 +21,7 @@
  all: $(TARGET)
  
  $(TARGET): $(OBJS)
