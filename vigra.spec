@@ -2,16 +2,21 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.2.0
-Release:	0.2
+Release:	1
 License:	The VIGRA Artistic License
 Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
 # Source0-md5:	fbb385e93d4b40469b04af4bc7079734
+Patch0:		%{name}-ac.patch
 URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	fftw-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
+BuildRequires:	libtool
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -37,6 +42,10 @@ Summary:        Header files for vigra library
 Summary(pl):	Pliki nag³ówkowe biblioteki vigra
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
+Requires:	libjpeg-devel
+Requires:	libpng-devel
+Requires:	libstdc++-devel
+Requires:	libtiff-devel
 
 %description devel
 Header files needed to compile programs with vigra.
@@ -57,48 +66,47 @@ Static version of vigra library.
 %description static -l pl
 Statyczna wersja biblioteki vigra.
 
+%package doc
+Summary:	Development documentation for vigra library
+Summary(pl):	Dokumentacja programisty do biblioteki vigra
+Group:		Documentation
+
+%description doc
+Development documentation for vigra library.
+
+%description doc -l pl
+Dokumentacja programisty do biblioteki vigra.
+
 %prep
-%setup -q -c
+%setup -q -n %{name}%{version}
+%patch0 -p1
+
+tail -n +510 config/acinclude.m4 > acinclude.m4
+ln -sf config/configure.in .
 
 %build
-cd %{name}%{version}
-
-./configure \
-        LDFLAGS="${LDFLAGS:-%rpmldflags}" \
-	CFLAGS="${CFLAGS:-%rpmcflags}" \
-	CXXFLAGS="${CXXFLAGS:-%rpmcflags}" \
-	FFLAGS="${FFLAGS:-%rpmcflags}" \
-	CPPFLAGS="${CPPFLAGS:-}" \
-	%{?__cc:CC="%{__cc}"} \
-	%{?__cxx:CXX="%{__cxx}"} \
-	--build=%{_target_platform} \
-	--prefix=%{_prefix} \
-	--exec-prefix=%{_exec_prefix} \
-	--bindir=%{_bindir} \
-	--includedir=%{_includedir} \
-	--libdir=%{_libdir} \
-    --with-tiff \
-    --with-jpeg \
-    --with-png \
-    --with-zlib \
-    --with-fftw \
-    --enable-shared=yes \
-    --docdir=%{buildroot}%{_datadir}/doc/%{name}-%{version}
-
+cp -f /usr/share/automake/config.* config
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%configure \
+	--with-fftw \
+	--with-jpeg \
+	--with-png \
+	--with-tiff \
+	--with-zlib
 
 %{__make}
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
-cd %{name}%{version}
-%{__make} \
+
+%{__make} install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	exec-prefix=$RPM_BUILD_ROOT%{_exec_prefix} \
 	bindir=$RPM_BUILD_ROOT%{_bindir} \
 	includedir=$RPM_BUILD_ROOT%{_includedir} \
-	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	install
+	libdir=$RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -108,18 +116,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%dir %{_docdir}/%{name}-%{version}
-%{_docdir}/%{name}-%{version}/LICENSE
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%doc LICENSE README
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
-#XXX: fix %{_docdir}
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so
-%{_libdir}/*.la
-%{_includedir}/*
+%attr(755,root,root) %{_bindir}/vigra-config
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
+%{_includedir}/vigra
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/lib*.a
+
+%files doc
+%defattr(644,root,root,755)
+%doc @docdir@/[!L]*
