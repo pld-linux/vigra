@@ -1,4 +1,5 @@
 Summary:	Generic Programming for Computer Vision
+Summary(pl):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.2.0
 Release:	0.2
@@ -7,8 +8,12 @@ Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
 # Source0-md5:	fbb385e93d4b40469b04af4bc7079734
 URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
+BuildRequires:	fftw-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-BuildRequires:	zlib-devel, libjpeg-devel, libpng-devel, libtiff-devel, fftw-devel
 
 %description
 VIGRA stands for "Vision with Generic Algorithms". It's a novel
@@ -18,21 +23,39 @@ to those in the C++ Standard Template Library, you can easily adapt
 any VIGRA component to the needs of your application, without thereby
 giving up execution speed.
 
+%description -l pl
+VIGRA to skrót od "Vision with Generic Algorithms" (widok z ogólnymi
+algorytmami). Jest to nowa biblioteka do obrazu komputerowego k³ad±ca
+g³ówny nacisk na algorytmy i struktury danych z mo¿liwo¶ci±
+dostosowania do w³asnych potrzeb. Poprzez u¿ycie technik szablonów
+podobnych do tych w standardowej bibliotece szablonów C++ (STL) mo¿na
+³atwo zaadaptowaæ dowolny komponent VIGRA do potrzeb w³asnej aplikacji
+bez po¶wiêcania szybko¶ci wykonywania.
+
 %package devel
-Summary:        vigra - header files
+Summary:        Header files for vigra library
+Summary(pl):	Pliki nag³ówkowe biblioteki vigra
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
 
 %description devel
 Header files needed to compile programs with vigra.
 
+%description devel -l pl
+Pliki nag³ówkowe potrzebne do budowania programów u¿ywaj±cych
+biblioteki vigra.
+
 %package static
 Summary:        vigra - static library
+Summary(pl):	Statyczna biblioteka vigra
 Group:          Development/Libraries
 Requires:       %{name}-devel = %{version}-%{release}
 
 %description static
-Static version of vigra..
+Static version of vigra library.
+
+%description static -l pl
+Statyczna wersja biblioteki vigra.
 
 %prep
 %setup -q -c
@@ -77,23 +100,24 @@ cd %{name}%{version}
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
 	install
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
+%dir %{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}/LICENSE
-%{_libdir}/*.so.*.*.*
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%{_docdir}
-%attr(755,root,root) %{_bindir}
+#XXX: fix %{_docdir}
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/*.so
 %{_libdir}/*.la
-%{_libdir}/*.so
 %{_includedir}/*
 
 %files static
