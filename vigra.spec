@@ -38,10 +38,10 @@ podobnych do tych w standardowej bibliotece szablonów C++ (STL) mo¿na
 bez po¶wiêcania szybko¶ci wykonywania.
 
 %package devel
-Summary:        Header files for vigra library
+Summary:	Header files for vigra library
 Summary(pl):	Pliki nag³ówkowe biblioteki vigra
-Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel
 Requires:	libpng-devel
 Requires:	libstdc++-devel
@@ -55,10 +55,10 @@ Pliki nag³ówkowe potrzebne do budowania programów u¿ywaj±cych
 biblioteki vigra.
 
 %package static
-Summary:        vigra - static library
+Summary:	vigra - static library
 Summary(pl):	Statyczna biblioteka vigra
-Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static version of vigra library.
