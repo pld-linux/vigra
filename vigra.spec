@@ -1,17 +1,17 @@
 Summary:	Generic Programming for Computer Vision
 Summary(pl):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.2.0
+Version:	1.3.2
 Release:	1
 License:	The VIGRA Artistic License
 Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
-# Source0-md5:	fbb385e93d4b40469b04af4bc7079734
+# Source0-md5:	6a787f86df5e45be809ac97c86acddae
 Patch0:		%{name}-ac.patch
 URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	fftw-devel
+BuildRequires:	fftw3-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
