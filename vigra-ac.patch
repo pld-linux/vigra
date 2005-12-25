@@ -1,5 +1,5 @@
---- vigra1.3.2/config/configure.in.orig	2005-01-27 21:06:04.000000000 +0100
-+++ vigra1.3.2/config/configure.in	2005-04-03 00:07:14.930618800 +0200
+--- vigra1.4.0/config/configure.in.orig	2005-12-21 05:53:05.000000000 +0100
++++ vigra1.4.0/config/configure.in	2005-12-25 01:16:34.468722080 +0100
 @@ -38,7 +38,7 @@
      prefix=`pwd`
  fi
@@ -13,8 +13,8 @@
  dnl AC_CYGWIN seems to be part of AC_CANONICAL_SYSTEM
  dnl AC_MINGW32 seems to be part of AC_CANONICAL_SYSTEM
  
--CFLAGS=-O
--CXXFLAGS=-O
+-CFLAGS="$CFLAGS -O"
+-CXXFLAGS="$CXXFLAGS -O"
 -
  AC_ARG_WITH( cc, AC_HELP_STRING([--with-cc], [your C compiler (default=gcc)]), CC=$with_cc, [if test "x$CC" = "x" ; then CC=gcc ; fi])
  AC_ARG_WITH( cxx, AC_HELP_STRING([--with-cxx], [your C++ compiler (default=g++)]), CXX=$with_cxx, [if test "x$CXX" = "x" ; then CXX=g++ ; fi])
