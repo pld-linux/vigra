@@ -1,12 +1,12 @@
 Summary:	Generic Programming for Computer Vision
 Summary(pl):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.3.3
+Version:	1.4.0
 Release:	1
 License:	The VIGRA Artistic License
 Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
-# Source0-md5:	518d546d5ebd9388fb0dc968c1e91280
+# Source0-md5:	ea91f2fb4212a21d708aced277e6e85a
 Patch0:		%{name}-ac.patch
 URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
 BuildRequires:	autoconf
