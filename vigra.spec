@@ -3,7 +3,7 @@ Summary(pl):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.4.0
 Release:	1
-License:	The VIGRA Artistic License
+License:	MIT
 Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
 # Source0-md5:	ea91f2fb4212a21d708aced277e6e85a
