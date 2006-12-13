@@ -1,12 +1,12 @@
 Summary:	Generic Programming for Computer Vision
 Summary(pl):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.4.0
+Version:	1.5.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
-# Source0-md5:	ea91f2fb4212a21d708aced277e6e85a
+# Source0-md5:	5713de4ebfe29e1b5fa9689af76b8a90
 Patch0:		%{name}-ac.patch
 URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
 BuildRequires:	autoconf
@@ -110,7 +110,8 @@ rm -rf $RPM_BUILD_ROOT
 	exec-prefix=$RPM_BUILD_ROOT%{_exec_prefix} \
 	bindir=$RPM_BUILD_ROOT%{_bindir} \
 	includedir=$RPM_BUILD_ROOT%{_includedir} \
-	libdir=$RPM_BUILD_ROOT%{_libdir}
+	libdir=$RPM_BUILD_ROOT%{_libdir} \
+	docdir=`pwd`/docs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -120,20 +121,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%doc LICENSE.txt README.txt
+%attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/vigra-config
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libvigraimpex.so
+%{_libdir}/libvigraimpex.la
 %{_includedir}/vigra
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libvigraimpex.a
 
 %files doc
 %defattr(644,root,root,755)
-%doc @docdir@/[!L]*
+%doc docs/[!L]*
