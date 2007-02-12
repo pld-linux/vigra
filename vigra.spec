@@ -1,5 +1,5 @@
 Summary:	Generic Programming for Computer Vision
-Summary(pl):	OgÛlne programowanie obrazu komputerowego
+Summary(pl.UTF-8):   Og√≥lne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.5.0
 Release:	1
@@ -30,18 +30,18 @@ to those in the C++ Standard Template Library, you can easily adapt
 any VIGRA component to the needs of your application, without thereby
 giving up execution speed.
 
-%description -l pl
-VIGRA to skrÛt od "Vision with Generic Algorithms" (widok z ogÛlnymi
-algorytmami). Jest to nowa biblioteka do obrazu komputerowego k≥ad±ca
-g≥Ûwny nacisk na algorytmy i struktury danych z moøliwo∂ci±
-dostosowania do w≥asnych potrzeb. Poprzez uøycie technik szablonÛw
-podobnych do tych w standardowej bibliotece szablonÛw C++ (STL) moøna
-≥atwo zaadaptowaÊ dowolny komponent VIGRA do potrzeb w≥asnej aplikacji
-bez po∂wiÍcania szybko∂ci wykonywania.
+%description -l pl.UTF-8
+VIGRA to skr√≥t od "Vision with Generic Algorithms" (widok z og√≥lnymi
+algorytmami). Jest to nowa biblioteka do obrazu komputerowego k≈ÇadƒÖca
+g≈Ç√≥wny nacisk na algorytmy i struktury danych z mo≈ºliwo≈õciƒÖ
+dostosowania do w≈Çasnych potrzeb. Poprzez u≈ºycie technik szablon√≥w
+podobnych do tych w standardowej bibliotece szablon√≥w C++ (STL) mo≈ºna
+≈Çatwo zaadaptowaƒá dowolny komponent VIGRA do potrzeb w≈Çasnej aplikacji
+bez po≈õwiƒôcania szybko≈õci wykonywania.
 
 %package devel
 Summary:	Header files for vigra library
-Summary(pl):	Pliki nag≥Ûwkowe biblioteki vigra
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe biblioteki vigra
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel
@@ -52,31 +52,31 @@ Requires:	libtiff-devel
 %description devel
 Header files needed to compile programs with vigra.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe potrzebne do budowania programÛw uøywaj±cych
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe potrzebne do budowania program√≥w u≈ºywajƒÖcych
 biblioteki vigra.
 
 %package static
 Summary:	vigra - static library
-Summary(pl):	Statyczna biblioteka vigra
+Summary(pl.UTF-8):   Statyczna biblioteka vigra
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static version of vigra library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna wersja biblioteki vigra.
 
 %package doc
 Summary:	Development documentation for vigra library
-Summary(pl):	Dokumentacja programisty do biblioteki vigra
+Summary(pl.UTF-8):   Dokumentacja programisty do biblioteki vigra
 Group:		Documentation
 
 %description doc
 Development documentation for vigra library.
 
-%description doc -l pl
+%description doc -l pl.UTF-8
 Dokumentacja programisty do biblioteki vigra.
 
 %prep
