@@ -1,5 +1,5 @@
 Summary:	Generic Programming for Computer Vision
-Summary(pl.UTF-8):   Ogólne programowanie obrazu komputerowego
+Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.5.0
 Release:	1
@@ -41,7 +41,7 @@ bez poświęcania szybkości wykonywania.
 
 %package devel
 Summary:	Header files for vigra library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki vigra
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki vigra
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel
@@ -58,7 +58,7 @@ biblioteki vigra.
 
 %package static
 Summary:	vigra - static library
-Summary(pl.UTF-8):   Statyczna biblioteka vigra
+Summary(pl.UTF-8):	Statyczna biblioteka vigra
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -70,7 +70,7 @@ Statyczna wersja biblioteki vigra.
 
 %package doc
 Summary:	Development documentation for vigra library
-Summary(pl.UTF-8):   Dokumentacja programisty do biblioteki vigra
+Summary(pl.UTF-8):	Dokumentacja programisty do biblioteki vigra
 Group:		Documentation
 
 %description doc
