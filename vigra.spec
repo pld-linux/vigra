@@ -18,6 +18,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	pkgconfig
 #BuildRequires:	python
 #BuildRequires:	python-devel
 BuildRequires:	zlib-devel
