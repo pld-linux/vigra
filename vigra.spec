@@ -2,12 +2,13 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.6.0
-Release:	3
+Release:	4
 License:	MIT
 Group:		Libraries
 Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
 # Source0-md5:	d62650a6f908e85643e557a236ea989c
 Patch0:		%{name}-ac.patch
+Patch1:		%{name}-libpng.patch
 URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -82,6 +83,7 @@ Dokumentacja programisty do biblioteki vigra.
 %prep
 %setup -q -n %{name}%{version}
 %patch0 -p1
+%patch1 -p1
 
 tail -n +510 config/acinclude.m4 > acinclude.m4
 ln -sf config/configure.in .
