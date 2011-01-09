@@ -1,26 +1,28 @@
 Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.6.0
-Release:	5
+Version:	1.7.1
+Release:	1
 License:	MIT
 Group:		Libraries
-Source0:	http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/%{name}%{version}.tar.gz
-# Source0-md5:	d62650a6f908e85643e557a236ea989c
-Patch0:		%{name}-ac.patch
-Patch1:		%{name}-libpng.patch
-URL:		http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra/
-BuildRequires:	autoconf
-BuildRequires:	automake
+Source0:	http://hci.iwr.uni-heidelberg.de/vigra/%{name}-%{version}-src.tar.gz
+# Source0-md5:	2bde208e0fd7626770169dd4fa097282
+URL:		http://hci.iwr.uni-heidelberg.de/vigra/
+BuildRequires:	boost-python-devel
+BuildRequires:	cmake >= 2.6.0
+BuildRequires:	doxygen
 BuildRequires:	fftw3-devel
+BuildRequires:	hdf5-devel >= 1.6
 BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel
+BuildRequires:	libpng-devel >= 1.4.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
-#BuildRequires:	python
-#BuildRequires:	python-devel
+BuildRequires:	python
+BuildRequires:	python-Sphinx
+BuildRequires:	python-devel
+BuildRequires:	python-numpy-devel
+BuildRequires:	rpmbuild(macros) >= 1.586
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -46,10 +48,13 @@ Summary:	Header files for vigra library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki vigra
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	fftw3-devel
+Requires:	hdf5-devel >= 1.6
 Requires:	libjpeg-devel
 Requires:	libpng-devel
 Requires:	libstdc++-devel
 Requires:	libtiff-devel
+Obsoletes:	vigra-static
 
 %description devel
 Header files needed to compile programs with vigra.
@@ -58,17 +63,19 @@ Header files needed to compile programs with vigra.
 Pliki nagłówkowe potrzebne do budowania programów używających
 biblioteki vigra.
 
-%package static
-Summary:	vigra - static library
-Summary(pl.UTF-8):	Statyczna biblioteka vigra
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+%package -n python-vigra
+Summary:	VIGRA Python bindings
+Summary(pl.UTF-8):	Wiązania Pythona do biblioteki VIGRA
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+Requires:	python-numpy
+Suggests:	python-PyQt4
 
-%description static
-Static version of vigra library.
+%description -n python-vigra
+VIGRA Python bindings.
 
-%description static -l pl.UTF-8
-Statyczna wersja biblioteki vigra.
+%description -n python-vigra -l pl.UTF-8
+Wiązania Pythona do biblioteki VIGRA.
 
 %package doc
 Summary:	Development documentation for vigra library
@@ -82,26 +89,11 @@ Development documentation for vigra library.
 Dokumentacja programisty do biblioteki vigra.
 
 %prep
-%setup -q -n %{name}%{version}
-%patch0 -p1
-%patch1 -p1
-
-tail -n +510 config/acinclude.m4 > acinclude.m4
-ln -sf config/configure.in .
+%setup -q
 
 %build
-cp -f /usr/share/automake/config.* config
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%configure \
-	--with-fftw \
-	--with-jpeg \
-	--with-png \
-	--with-tiff \
-	--with-zlib
-
-#	--with-python requires src/pythonbindings (missing in sources)
+%cmake . \
+	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG"
 
 %{__make}
 
@@ -109,12 +101,13 @@ cp -f /usr/share/automake/config.* config
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	exec-prefix=$RPM_BUILD_ROOT%{_exec_prefix} \
-	bindir=$RPM_BUILD_ROOT%{_bindir} \
-	includedir=$RPM_BUILD_ROOT%{_includedir} \
-	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	docdir=`pwd`/docs
+	DESTDIR=$RPM_BUILD_ROOT
+
+%py_comp $RPM_BUILD_ROOT%{py_sitedir}/vigra
+%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/vigra
+%py_postclean
+
+%{__rm} -r $RPM_BUILD_ROOT%{_prefix}/doc/vigra*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -125,20 +118,26 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt README.txt
-%attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.2
+%attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.3
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/vigra-config
 %attr(755,root,root) %{_libdir}/libvigraimpex.so
-%{_libdir}/libvigraimpex.la
 %{_includedir}/vigra
+%dir %{_libdir}/vigra
+%{_libdir}/vigra/VigraConfig*.cmake
+%{_libdir}/vigra/vigra-targets*.cmake
 
-%files static
+%files -n python-vigra
 %defattr(644,root,root,755)
-%{_libdir}/libvigraimpex.a
+%dir %{py_sitedir}/vigra
+%attr(755,root,root) %{py_sitedir}/vigra/*.so
+%{py_sitedir}/vigra/*.py[co]
+%dir %{py_sitedir}/vigra/pyqt
+%{py_sitedir}/vigra/pyqt/*.py[co]
 
 %files doc
 %defattr(644,root,root,755)
-%doc docs/[!L]*
+%doc doc/{vigra,vigranumpy}
