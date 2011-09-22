@@ -1,28 +1,28 @@
 Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.7.1
+Version:	1.8.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://hci.iwr.uni-heidelberg.de/vigra/%{name}-%{version}-src.tar.gz
-# Source0-md5:	2bde208e0fd7626770169dd4fa097282
+# Source0-md5:	15c5544448e529ee60020758ab6be264
 URL:		http://hci.iwr.uni-heidelberg.de/vigra/
-BuildRequires:	boost-python-devel
+BuildRequires:	boost-python-devel >= 1.40.0
 BuildRequires:	cmake >= 2.6.0
 BuildRequires:	doxygen
-BuildRequires:	fftw3-devel
-BuildRequires:	hdf5-devel >= 1.6
+BuildRequires:	fftw3-single-devel
+BuildRequires:	hdf5-devel >= 1.8
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.4.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python
-BuildRequires:	python-Sphinx
 BuildRequires:	python-devel
 BuildRequires:	python-numpy-devel
 BuildRequires:	rpmbuild(macros) >= 1.586
+BuildRequires:	sphinx-pdg
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,8 +48,8 @@ Summary:	Header files for vigra library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki vigra
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	fftw3-devel
-Requires:	hdf5-devel >= 1.6
+Requires:	fftw3-single-devel
+Requires:	hdf5-devel >= 1.8
 Requires:	libjpeg-devel
 Requires:	libpng-devel
 Requires:	libstdc++-devel
@@ -119,7 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE.txt README.txt
 %attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.3
+%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.4
 
 %files devel
 %defattr(644,root,root,755)
