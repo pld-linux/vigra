@@ -1,0 +1,78 @@
+Note: for some reason vigra uses a non-standard LIBDIR_SUFFIX definition
+whereas usually this is LIB_SUFFIX.  This patch fixes this since fedora expects
+to use the standard.
+
+diff -baur vigra-1.8.0/CMakeLists.txt vigra-1.8.0.new/CMakeLists.txt
+--- vigra-1.8.0/CMakeLists.txt	2011-09-20 19:38:36.000000000 +0100
++++ vigra-1.8.0.new/CMakeLists.txt	2011-09-24 21:20:55.000000000 +0100
+@@ -128,6 +128,8 @@
+ ENDIF()
+ 
+ 
++set(LIB_SUFFIX "" CACHE STRING "Define suffix of lib directory name (32/64)" )
++
+ ##################################################
+ #
+ #     global installation commands
+@@ -213,10 +215,10 @@
+ 
+ # export targets:
+ INSTALL(EXPORT vigra-targets
+-        DESTINATION lib${LIBDIR_SUFFIX}/vigra)
++        DESTINATION lib${LIB_SUFFIX}/vigra)
+ INSTALL(FILES ${PROJECT_BINARY_DIR}/lib/vigra/CMake/VigraConfig.cmake
+             ${PROJECT_BINARY_DIR}/lib/vigra/CMake/VigraConfigVersion.cmake
+-        DESTINATION lib${LIBDIR_SUFFIX}/vigra)
++        DESTINATION lib${LIB_SUFFIX}/vigra)
+ EXPORT(TARGETS vigraimpex FILE vigra-targets.cmake)
+ 
+ ##################################################
+@@ -289,7 +291,7 @@
+ MESSAGE( STATUS "---------------------------------------------------------" )
+ 
+ MESSAGE( STATUS "  includes will be installed at: ${CMAKE_INSTALL_PREFIX}/include")
+-MESSAGE( STATUS "  libraries will be installed at: ${CMAKE_INSTALL_PREFIX}/lib${LIBDIR_SUFFIX}")
++MESSAGE( STATUS "  libraries will be installed at: ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}")
+ 
+ IF (MSVC)
+   MESSAGE( STATUS "  binaries and DLLs will be installed at: ${CMAKE_INSTALL_PREFIX}/bin")
+diff -baur vigra-1.8.0/doc/vigra/Installation.html vigra-1.8.0.new/doc/vigra/Installation.html
+--- vigra-1.8.0/doc/vigra/Installation.html	2011-09-20 19:43:37.000000000 +0100
++++ vigra-1.8.0.new/doc/vigra/Installation.html	2011-09-24 21:21:39.000000000 +0100
+@@ -58,8 +58,8 @@
+ <dd>build VIGRA Python bindings (default: 1). Pass -DWITH_VIGRANUMPY=0 to suppress vigranumpy. </dd>
+ <dt>-DWITH_HDF5=1 </dt>
+ <dd>build VIGRA with HDF5 support (default: 1). Pass -DDWITH_HDF5=0 to compile without HDF5. </dd>
+-<dt>-DLIBDIR_SUFFIX=64 </dt>
+-<dd>define suffix of lib directory name (default: empty string, i.e. no suffix). Use -DLIBDIR_SUFFIX=64 when you want to install libraries in $CMAKE_INSTALL_PREFIX/lib64. </dd>
++<dt>-DLIB_SUFFIX=64 </dt>
++<dd>define suffix of lib directory name (default: empty string, i.e. no suffix). Use -DLIB_SUFFIX=64 when you want to install libraries in $CMAKE_INSTALL_PREFIX/lib64. </dd>
+ </dl>
+ <p>More fine-grained customization (e.g. specification of explicit paths for all dependencies, customization of compiler flags) is possible by editing the file &lt;vigra_build_path&gt;/CMakeCache.txt. This is best done by means of the interactive programs <b>ccmake</b> or <b>cmake-gui</b>. Consult the <a href="http://www.cmake.org/cmake/help/documentation.html">cmake documentation</a> for more detailed help.</p>
+ <p>For using VIGRA in another CMake-built project, you can use the CMake command FIND_PACKAGE(Vigra), which will set the CMake variables ${Vigra_INCLUDE_DIRS} with the correct include path, and import the binary targets (currently vigraimpex) to link against (e.g., TARGET_LINK_LIBRARIES(targetname vigraimpex)). For this mechanism to work, CMake reads a config file VigraConfig.cmake, which is installed along with the library in CMAKE_INSTALL_PREFIX/lib/vigra. Alternatively, you can point CMake (cache entry Vigra_DIR) to VIGRA's build directory, where a corresponding VigraConfig.cmake resides for using the build version directly without installation. </p>
+diff -baur vigra-1.8.0/docsrc/installation.dxx vigra-1.8.0.new/docsrc/installation.dxx
+--- vigra-1.8.0/docsrc/installation.dxx	2011-09-20 19:38:36.000000000 +0100
++++ vigra-1.8.0.new/docsrc/installation.dxx	2011-09-24 21:19:52.000000000 +0100
+@@ -53,9 +53,9 @@
+          vigranumpy.
+     <DT> -DWITH_HDF5=1
+          <DD> build VIGRA with HDF5 support (default: 1). Pass -DDWITH_HDF5=0 to compile without HDF5.
+-    <DT> -DLIBDIR_SUFFIX=64
++    <DT> -DLIB_SUFFIX=64
+          <DD> define suffix of lib directory name (default: empty string, i.e. no suffix). Use 
+-         -DLIBDIR_SUFFIX=64 when you want to install libraries in $CMAKE_INSTALL_PREFIX/lib64.
++         -DLIB_SUFFIX=64 when you want to install libraries in $CMAKE_INSTALL_PREFIX/lib64.
+     </DL>
+ 
+     More fine-grained customization (e.g. specification of explicit paths for all dependencies, customization of compiler flags) is possible by editing the file &lt;vigra_build_path&gt;/CMakeCache.txt. This is best done by means of the interactive programs <b>ccmake</b> or <b>cmake-gui</b>. Consult the <a href="http://www.cmake.org/cmake/help/documentation.html">cmake documentation</a> for more detailed help.
+diff -baur vigra-1.8.0/src/impex/CMakeLists.txt vigra-1.8.0.new/src/impex/CMakeLists.txt
+--- vigra-1.8.0/src/impex/CMakeLists.txt	2011-09-20 19:38:36.000000000 +0100
++++ vigra-1.8.0.new/src/impex/CMakeLists.txt	2011-09-24 21:19:52.000000000 +0100
+@@ -80,5 +80,5 @@
+ INSTALL(TARGETS vigraimpex
+         EXPORT vigra-targets
+         RUNTIME DESTINATION bin 
+-        LIBRARY DESTINATION lib${LIBDIR_SUFFIX} 
+-        ARCHIVE DESTINATION lib${LIBDIR_SUFFIX})
++        LIBRARY DESTINATION lib${LIB_SUFFIX} 
++        ARCHIVE DESTINATION lib${LIB_SUFFIX})

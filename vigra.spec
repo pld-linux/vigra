@@ -2,12 +2,13 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.8.0
-Release:	4
+Release:	5
 License:	MIT
 Group:		Libraries
 Source0:	http://hci.iwr.uni-heidelberg.de/vigra/%{name}-%{version}-src.tar.gz
 # Source0-md5:	15c5544448e529ee60020758ab6be264
 URL:		http://hci.iwr.uni-heidelberg.de/vigra/
+Patch0:		vigra-1.8.0.lib_suffix.patch
 BuildRequires:	boost-python-devel >= 1.40.0
 BuildRequires:	cmake >= 2.6.0
 BuildRequires:	doxygen
@@ -90,6 +91,7 @@ Dokumentacja programisty do biblioteki vigra.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %cmake . \
