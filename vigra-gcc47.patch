@@ -1,0 +1,12 @@
+diff -ru vigra-1.8.0/include/vigra/numpy_array.hxx vigra-1.8.0.new/include/vigra/numpy_array.hxx
+--- vigra-1.8.0/include/vigra/numpy_array.hxx	2011-09-20 19:38:36.000000000 +0100
++++ vigra-1.8.0.new/include/vigra/numpy_array.hxx	2012-02-27 21:03:54.000000000 +0000
+@@ -1074,7 +1074,7 @@
+ 
+         this->m_stride /= sizeof(value_type);
+         this->m_ptr = reinterpret_cast<pointer>(pyArray()->data);
+-        vigra_precondition(checkInnerStride(Stride()),
++        vigra_precondition(this->checkInnerStride(Stride()),
+             "NumpyArray<..., UnstridedArrayTag>::setupArrayView(): First dimension of given array is not unstrided (should never happen).");
+ 
+     }
