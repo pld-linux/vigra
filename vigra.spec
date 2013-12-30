@@ -1,20 +1,23 @@
+# TODO: [lib]lemon, WITH_LEMON
 Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.9.0
-Release:	5
+Version:	1.10.0
+Release:	1
 License:	MIT
 Group:		Libraries
-Source0:	http://hci.iwr.uni-heidelberg.de/vigra/%{name}-%{version}-src.tar.gz
-# Source0-md5:	b6155afe1ea967917d2be16d98a85404
+#Source0Download: http://ukoethe.github.io/vigra/#download
+Source0:	https://github.com/ukoethe/vigra/releases/download/Version-1-10-0/%{name}-%{version}-src-with-docu.tar.gz
+# Source0-md5:	85e2968e4ee5f9541b5dd8b3fb9cc433
 URL:		http://hci.iwr.uni-heidelberg.de/vigra/
+BuildRequires:	OpenEXR-devel
 BuildRequires:	boost-python-devel >= 1.40.0
 BuildRequires:	cmake >= 2.6.0
 BuildRequires:	doxygen
 BuildRequires:	fftw3-single-devel
 BuildRequires:	hdf5-devel >= 1.8
 BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel >= 1.4.0
+BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
@@ -51,7 +54,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	fftw3-single-devel
 Requires:	hdf5-devel >= 1.8
 Requires:	libjpeg-devel
-Requires:	libpng-devel
+Requires:	libpng-devel >= 2:1.4.0
 Requires:	libstdc++-devel
 Requires:	libtiff-devel
 Obsoletes:	vigra-static
@@ -77,6 +80,20 @@ VIGRA Python bindings.
 %description -n python-vigra -l pl.UTF-8
 Wiązania Pythona do biblioteki VIGRA.
 
+%package -n python-vigra-devel
+Summary:	Development file for VIGRA Python bindings
+Summary(pl.UTF-8):	Plik programistyczny wiązań Pythona do biblioteki VIGRA
+Group:		Development/Libraries
+Requires:	cmake
+Requires:	python-vigra = %{version}-%{release}
+
+%description -n python-vigra-devel
+Development (cmake config) file for VIGRA Python bindings.
+
+%description -n python-vigra-devel -l pl.UTF-8
+Plik programistyczny (konfiguracja cmake'a) dla wiązań Pythona do
+biblioteki VIGRA.
+
 %package doc
 Summary:	Development documentation for vigra library
 Summary(pl.UTF-8):	Dokumentacja programisty do biblioteki vigra
@@ -93,7 +110,9 @@ Dokumentacja programisty do biblioteki vigra.
 
 %build
 %cmake . \
-	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG"
+	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
+	-DWITH_BOOST_GRAPH=ON \
+	-DWITH_OPENEXR=ON
 
 %{__make}
 
@@ -117,9 +136,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE.txt README.txt
+%doc LICENSE.txt README.md
 %attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.4
+%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.5
 
 %files devel
 %defattr(644,root,root,755)
@@ -137,6 +156,11 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/vigra/*.py[co]
 %dir %{py_sitedir}/vigra/pyqt
 %{py_sitedir}/vigra/pyqt/*.py[co]
+
+%files -n python-vigra-devel
+%defattr(644,root,root,755)
+%dir %{_libdir}/vigranumpy
+%{_libdir}/vigranumpy/VigranumpyConfig.cmake
 
 %files doc
 %defattr(644,root,root,755)
