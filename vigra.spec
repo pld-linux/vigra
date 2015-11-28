@@ -3,7 +3,7 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.10.0
-Release:	9
+Release:	10
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
