@@ -1,16 +1,16 @@
-# TODO: [lib]lemon, WITH_LEMON
+# TODO: lemon support, WITH_LEMON
 Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.10.0
-Release:	13
+Version:	1.11.1
+Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
-Source0:	https://github.com/ukoethe/vigra/releases/download/Version-1-10-0/%{name}-%{version}-src-with-docu.tar.gz
-# Source0-md5:	85e2968e4ee5f9541b5dd8b3fb9cc433
+Source0:	https://github.com/ukoethe/vigra/releases/download/Version-1-11-1/%{name}-%{version}-src.tar.gz
+# Source0-md5:	e72faf9fb82fa71fa63ba064bb63b703
 Patch0:		python-install.patch
-URL:		http://hci.iwr.uni-heidelberg.de/vigra/
+URL:		http://ukoethe.github.io/vigra/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	boost-python-devel >= 1.40.0
 BuildRequires:	cmake >= 2.6.0
@@ -19,7 +19,7 @@ BuildRequires:	fftw3-single-devel
 BuildRequires:	hdf5-devel >= 1.8
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.4.0
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python
@@ -140,7 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE.txt README.md
 %attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.5
+%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.11
 
 %files devel
 %defattr(644,root,root,755)
