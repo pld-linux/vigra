@@ -10,6 +10,7 @@ Group:		Libraries
 Source0:	https://github.com/ukoethe/vigra/releases/download/Version-1-11-1/%{name}-%{version}-src.tar.gz
 # Source0-md5:	e72faf9fb82fa71fa63ba064bb63b703
 Patch0:		python-install.patch
+Patch1:		boost-python.patch
 URL:		http://ukoethe.github.io/vigra/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	boost-python-devel >= 1.40.0
@@ -109,6 +110,7 @@ Dokumentacja programisty do biblioteki vigra.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake . \
