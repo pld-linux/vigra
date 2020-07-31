@@ -3,7 +3,7 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.11.1
-Release:	5
+Release:	6
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
@@ -25,10 +25,11 @@ BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python
-BuildRequires:	python-devel
+BuildRequires:	python >= 1:2.7
+BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-numpy-devel
 BuildRequires:	rpmbuild(macros) >= 1.586
+BuildRequires:	sed >= 4.0
 BuildRequires:	sphinx-pdg
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -114,6 +115,8 @@ Dokumentacja programisty do biblioteki vigra.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+%{__sed} -i -e '1s,/usr/bin/env python$,%{__python},' config/vigra-config.in
 
 %build
 %cmake . \
