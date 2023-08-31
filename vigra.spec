@@ -62,7 +62,7 @@ Requires:	libjpeg-devel
 Requires:	libpng-devel >= 2:1.4.0
 Requires:	libstdc++-devel
 Requires:	libtiff-devel
-Obsoletes:	vigra-static
+Obsoletes:	vigra-static < 1.7
 
 %description devel
 Header files needed to compile programs with vigra.
