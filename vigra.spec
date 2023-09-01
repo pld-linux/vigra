@@ -3,7 +3,7 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.11.1
-Release:	13
+Release:	14
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
@@ -13,6 +13,8 @@ Patch0:		python-install.patch
 Patch1:		boost-python.patch
 # https://src.fedoraproject.org/rpms/vigra/raw/master/f/81958d302494e137f98a8b1d7869841532f90388.patch
 Patch2:		%{name}-multi_convolution.patch
+# https://src.fedoraproject.org/rpms/vigra/raw/rawhide/f/vigra-openexr3.patch
+Patch3:		%{name}-openexr3.patch
 URL:		http://ukoethe.github.io/vigra/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	boost-python-devel >= 1.40.0
@@ -115,11 +117,14 @@ Dokumentacja programisty do biblioteki vigra.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python$,%{__python},' config/vigra-config.in
 
 %build
-%cmake . \
+install -d build
+cd build
+%cmake .. \
 	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DWITH_BOOST_GRAPH=ON \
 	-DWITH_OPENEXR=ON
@@ -129,7 +134,7 @@ Dokumentacja programisty do biblioteki vigra.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}/vigra
