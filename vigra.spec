@@ -15,6 +15,7 @@ Patch1:		boost-python.patch
 Patch2:		%{name}-multi_convolution.patch
 # https://src.fedoraproject.org/rpms/vigra/raw/rawhide/f/vigra-openexr3.patch
 Patch3:		%{name}-openexr3.patch
+Patch4:		hdf5-1.12.patch
 URL:		http://ukoethe.github.io/vigra/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	boost-python-devel >= 1.40.0
@@ -114,10 +115,11 @@ Dokumentacja programisty do biblioteki vigra.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
+%patch -P 2 -p1
+%patch -P 3 -p1
+%patch -P 4 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python$,%{__python},' config/vigra-config.in
 
