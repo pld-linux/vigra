@@ -3,7 +3,7 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.11.1
-Release:	14
+Release:	15
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
@@ -16,6 +16,7 @@ Patch2:		%{name}-multi_convolution.patch
 # https://src.fedoraproject.org/rpms/vigra/raw/rawhide/f/vigra-openexr3.patch
 Patch3:		%{name}-openexr3.patch
 Patch4:		hdf5-1.12.patch
+Patch5:		gcc14.patch
 URL:		http://ukoethe.github.io/vigra/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	boost-python-devel >= 1.40.0
@@ -120,6 +121,7 @@ Dokumentacja programisty do biblioteki vigra.
 %patch -P 2 -p1
 %patch -P 3 -p1
 %patch -P 4 -p1
+%patch -P 5 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python$,%{__python},' config/vigra-config.in
 
