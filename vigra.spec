@@ -129,6 +129,7 @@ Dokumentacja programisty do biblioteki vigra.
 install -d build
 cd build
 %cmake .. \
+	-DPYTHON_VERSION=%{py_ver} \
 	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DWITH_BOOST_GRAPH=ON \
 	-DWITH_OPENEXR=ON
