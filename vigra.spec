@@ -3,7 +3,7 @@ Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
 Version:	1.11.1
-Release:	16
+Release:	17
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
@@ -129,6 +129,7 @@ Dokumentacja programisty do biblioteki vigra.
 install -d build
 cd build
 %cmake .. \
+	-DBoost_INCLUDE_DIR=%{_includedir}/boost \
 	-DPYTHON_VERSION=%{py_ver} \
 	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DWITH_BOOST_GRAPH=ON \
