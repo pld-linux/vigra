@@ -2,24 +2,17 @@
 Summary:	Generic Programming for Computer Vision
 Summary(pl.UTF-8):	Ogólne programowanie obrazu komputerowego
 Name:		vigra
-Version:	1.11.1
-Release:	17
+Version:	1.12.2
+Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: http://ukoethe.github.io/vigra/#download
-Source0:	https://github.com/ukoethe/vigra/releases/download/Version-1-11-1/%{name}-%{version}-src.tar.gz
-# Source0-md5:	e72faf9fb82fa71fa63ba064bb63b703
+Source0:	https://github.com/ukoethe/vigra/archive/Version-1-12-2/%{name}-%{version}-src.tar.gz
+# Source0-md5:	1031c61fe7b5b326664fe0bcaec4c158
 Patch0:		python-install.patch
-Patch1:		boost-python.patch
-# https://src.fedoraproject.org/rpms/vigra/raw/master/f/81958d302494e137f98a8b1d7869841532f90388.patch
-Patch2:		%{name}-multi_convolution.patch
-# https://src.fedoraproject.org/rpms/vigra/raw/rawhide/f/vigra-openexr3.patch
-Patch3:		%{name}-openexr3.patch
-Patch4:		hdf5-1.12.patch
-Patch5:		gcc14.patch
 URL:		http://ukoethe.github.io/vigra/
 BuildRequires:	OpenEXR-devel
-BuildRequires:	boost-python-devel >= 1.40.0
+BuildRequires:	boost-python3-devel >= 1.40.0
 BuildRequires:	cmake >= 2.6.0
 BuildRequires:	doxygen
 BuildRequires:	fftw3-single-devel
@@ -29,9 +22,9 @@ BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python >= 1:2.7
-BuildRequires:	python-devel >= 1:2.7
-BuildRequires:	python-numpy-devel
+BuildRequires:	python3
+BuildRequires:	python3-devel
+BuildRequires:	python3-numpy-devel
 BuildRequires:	rpmbuild(macros) >= 1.586
 BuildRequires:	sed >= 4.0
 BuildRequires:	sphinx-pdg
@@ -75,31 +68,31 @@ Header files needed to compile programs with vigra.
 Pliki nagłówkowe potrzebne do budowania programów używających
 biblioteki vigra.
 
-%package -n python-vigra
+%package -n python3-vigra
 Summary:	VIGRA Python bindings
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki VIGRA
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
-Requires:	python-numpy
-Suggests:	python-PyQt4
+Requires:	python3-numpy
+#Suggests:	python3-PyQt4
 
-%description -n python-vigra
+%description -n python3-vigra
 VIGRA Python bindings.
 
-%description -n python-vigra -l pl.UTF-8
+%description -n python3-vigra -l pl.UTF-8
 Wiązania Pythona do biblioteki VIGRA.
 
-%package -n python-vigra-devel
+%package -n python3-vigra-devel
 Summary:	Development file for VIGRA Python bindings
 Summary(pl.UTF-8):	Plik programistyczny wiązań Pythona do biblioteki VIGRA
 Group:		Development/Libraries
 Requires:	cmake
-Requires:	python-vigra = %{version}-%{release}
+Requires:	python3-vigra = %{version}-%{release}
 
-%description -n python-vigra-devel
+%description -n python3-vigra-devel
 Development (cmake config) file for VIGRA Python bindings.
 
-%description -n python-vigra-devel -l pl.UTF-8
+%description -n python3-vigra-devel -l pl.UTF-8
 Plik programistyczny (konfiguracja cmake'a) dla wiązań Pythona do
 biblioteki VIGRA.
 
@@ -115,22 +108,17 @@ Development documentation for vigra library.
 Dokumentacja programisty do biblioteki vigra.
 
 %prep
-%setup -q
+%setup -q -n %{name}-Version-1-12-2
 %patch -P 0 -p1
-%patch -P 1 -p1
-%patch -P 2 -p1
-%patch -P 3 -p1
-%patch -P 4 -p1
-%patch -P 5 -p1
 
-%{__sed} -i -e '1s,/usr/bin/env python$,%{__python},' config/vigra-config.in
+%{__sed} -i -e '1s,/usr/bin/env python$,%{__python3},' config/vigra-config.in
 
 %build
 install -d build
 cd build
 %cmake .. \
 	-DBoost_INCLUDE_DIR=%{_includedir}/boost \
-	-DPYTHON_VERSION=%{py_ver} \
+	-DPYTHON_VERSION=%{py3_ver} \
 	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DWITH_BOOST_GRAPH=ON \
 	-DWITH_OPENEXR=ON
@@ -143,10 +131,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%py_comp $RPM_BUILD_ROOT%{py_sitedir}/vigra
-%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/vigra
-%py_postclean
-
 %{__rm} -r $RPM_BUILD_ROOT%{_prefix}/doc/vigra*
 
 %clean
@@ -158,27 +142,27 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt README.md
-%attr(755,root,root) %{_libdir}/libvigraimpex.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvigraimpex.so.11
+%{_libdir}/libvigraimpex.so.*.*
+%ghost %{_libdir}/libvigraimpex.so.11
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/vigra-config
-%attr(755,root,root) %{_libdir}/libvigraimpex.so
+%{_libdir}/libvigraimpex.so
 %{_includedir}/vigra
 %dir %{_libdir}/vigra
 %{_libdir}/vigra/VigraConfig*.cmake
 %{_libdir}/vigra/vigra-targets*.cmake
 
-%files -n python-vigra
+%files -n python3-vigra
 %defattr(644,root,root,755)
-%dir %{py_sitedir}/vigra
-%attr(755,root,root) %{py_sitedir}/vigra/*.so
-%{py_sitedir}/vigra/*.py[co]
-%dir %{py_sitedir}/vigra/pyqt
-%{py_sitedir}/vigra/pyqt/*.py[co]
+%dir %{py3_sitedir}/vigra
+%attr(755,root,root) %{py3_sitedir}/vigra/*.so
+%{py3_sitedir}/vigra/*.py
+%dir %{py3_sitedir}/vigra/pyqt
+%{py3_sitedir}/vigra/pyqt/*.py
 
-%files -n python-vigra-devel
+%files -n python3-vigra-devel
 %defattr(644,root,root,755)
 %dir %{_libdir}/vigranumpy
 %{_libdir}/vigranumpy/VigranumpyConfig.cmake
